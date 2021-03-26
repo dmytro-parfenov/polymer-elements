@@ -1,1 +1,2 @@
-export * from './button';
+import './button/button';
+import './image/image';
