@@ -4,7 +4,7 @@ import {customElement, html, LitElement, property, TemplateResult} from 'lit-ele
 export class Image extends LitElement {
 
     @property({type: String})
-    src = 'https://via.placeholder.com/150';
+    src = './assets/images/150.png';
 
     @property({type: String})
     name = 'image'
