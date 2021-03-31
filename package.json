@@ -17,6 +17,7 @@
     "@typescript-eslint/parser": "^4.15.2",
     "@web/dev-server": "^0.1.8",
     "eslint": "^7.20.0",
+    "lit-analyzer": "^1.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.39.1",
     "rollup-plugin-cleanup": "^3.2.1",
