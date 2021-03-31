@@ -8,8 +8,9 @@ import copy from 'rollup-plugin-copy-assets';
 export default {
     input: 'src/main.ts',
     output: {
-        file: 'dist/main.js',
-        format: 'es'
+        dir: 'dist',
+        format: 'es',
+        chunkFileNames: '[name].js'
     },
     plugins: [
         typescript(),
