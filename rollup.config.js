@@ -6,9 +6,9 @@ import cleanup from 'rollup-plugin-cleanup';
 import copy from 'rollup-plugin-copy-assets';
 
 export default {
-    input: 'src/index.ts',
+    input: 'src/main.ts',
     output: {
-        file: 'dist/index.js',
+        file: 'dist/main.js',
         format: 'es'
     },
     plugins: [

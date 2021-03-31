@@ -3,11 +3,11 @@
   "author": "Dmytro Parfenov",
   "license": "ISC",
   "scripts": {
-    "start:elements": "npm run clean:dist && rollup -c -w",
+    "start:elements": "npm run clear:dist && rollup -c -w",
     "start:demo": "web-dev-server --node-resolve --watch",
-    "build:elements": "npm run clean:dist && rollup -c",
+    "build:elements": "npm run clear:dist && rollup -c",
     "lint": "eslint . --ext .js,.ts",
-    "clean:dist": "rimraf dist"
+    "clear:dist": "rimraf dist"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.1.0",
