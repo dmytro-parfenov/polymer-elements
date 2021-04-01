@@ -1,6 +1,4 @@
-import {InjectionToken} from './injection-token';
-
-export interface Injection<T = any> {
-    readonly token: InjectionToken<T>;
+export interface Injection {
+    readonly token: any;
     readonly parameterIndex: number;
 }

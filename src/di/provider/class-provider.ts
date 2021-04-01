@@ -1,5 +1,6 @@
-import {Constructor} from '../constructor';
+import {Type} from '../type';
+import {BaseProvider} from './base-provider';
 
-export interface ClassProvider<T> {
-    readonly useClass: Constructor<T>;
+export interface ClassProvider<T = any> extends BaseProvider{
+    readonly useClass: Type<T>;
 }

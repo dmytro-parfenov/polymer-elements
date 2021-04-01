@@ -1,9 +1,9 @@
 import {css, CSSResultArray, customElement, html, LitElement, TemplateResult} from 'lit-element';
 import {SecondService} from '../../core/second.service';
-import {includeInjections} from '../../di/decorator/include-injections';
+import {injectDependencies} from '../../di/decorator/inject-dependencies';
 
 @customElement('pe-second')
-@includeInjections()
+@injectDependencies()
 export class Second extends LitElement {
 
     constructor(private readonly secondService: SecondService) {

@@ -1,25 +1,26 @@
-import {InjectionToken} from './injection-token';
-import {Constructor} from './constructor';
+import {Type} from './type';
 import {Injection} from './injection';
 
-export const INJECTION_METADATA_KEY = 'custom:injections';
+export const reflection = new class {
+    private readonly injectionMetadataKey = 'custom:injections';
 
-export function resolveInjectionTokens<T>(target: Constructor<T>): InjectionToken[] {
-    const tokens: InjectionToken[] = Reflect.getMetadata('design:paramtypes', target) || [];
+    resolveTokens(target: Type<any>): any[] {
+        const tokens: any[] = Reflect.getMetadata('design:paramtypes', target) || [];
 
-    const injections = resolveInjections(target);
+        const injections = this.resolveInjections(target);
 
-    injections.forEach(injection => (tokens[injection.parameterIndex] = injection.token));
+        injections.forEach(injection => (tokens[injection.parameterIndex] = injection.token));
 
-    return tokens;
-}
+        return tokens;
+    }
 
-export function resolveInjections(target: Constructor): Injection[] {
-    return Reflect.getMetadata(INJECTION_METADATA_KEY, target) || [];
-}
+    resolveInjections(target: Type<any>): Injection[] {
+        return Reflect.getMetadata(this.injectionMetadataKey, target) || [];
+    }
 
-export function defineInjections(injections: Injection[], target: Constructor): void {
-    Reflect.defineMetadata(INJECTION_METADATA_KEY, injections, target);
+    defineInjections(injections: Injection[], target: Type<any>): void {
+        Reflect.defineMetadata(this.injectionMetadataKey, injections, target);
+    }
 }
 
 

@@ -1,11 +1,11 @@
 import {injector} from '../injector';
-import {Constructor} from '../constructor';
+import {Type} from '../type';
 
 export function injectable() {
-    return <T extends Constructor>(target: T): T => {
+    return <T extends Type<any>>(target: T): T => {
         injector.register({
             token: target,
-            provider: { useClass: target }
+            useClass: target
         });
         
         return target;

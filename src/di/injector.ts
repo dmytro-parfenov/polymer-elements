@@ -1,37 +1,36 @@
-import {InjectionToken} from './injection-token';
 import {Provider} from './provider/provider';
 import {ClassProvider} from './provider/class-provider';
 import {ValueProvider} from './provider/value-provider';
-import {resolveInjectionTokens} from './reflection';
+import {reflection} from './reflection';
 
 export const injector = new class {
 
-    private readonly registry = new Map<InjectionToken, Provider>();
+    private readonly registry = new Map<any, Provider>();
 
-    private readonly resolved = new Map<InjectionToken, any>();
+    private readonly container = new Map<any, any>();
 
-    resolve<T>(target: InjectionToken<T>): T {
-        const provider = this.registry.get(target);
+    resolve<T = any>(token: any): T {
+        const provider = this.registry.get(token);
 
         if (!provider) {
-            throw new Error(`Missing provider for: "${target.toString()}"`)
+            throw new Error(`Missing provider for: "${token}"`)
         }
 
-        const resolved = this.resolved.get(target) || this.resolveProvider(provider);
+        const resolved = this.container.has(token) ? this.container.get(token) : this.resolveProvider(provider);
 
-        this.resolved.set(target, resolved);
+        this.container.set(token, resolved);
 
         return resolved;
     }
 
-    register<T>({ token, provider }: {token: InjectionToken<T>, provider: Provider<T>}) {
-        this.registry.set(token, provider);
+    register(provider: Provider) {
+        this.registry.set(provider.token, provider);
 
         return this;
     }
 
     clear() {
-        this.resolved.clear();
+        this.container.clear();
         this.registry.clear();
     }
 
@@ -39,11 +38,11 @@ export const injector = new class {
         const classProvider = (provider as ClassProvider<any>).useClass || null
 
         if (classProvider) {
-            const tokens = resolveInjectionTokens(classProvider);
+            const tokens = reflection.resolveTokens(classProvider);
 
-            const values = tokens.map(token => injector.resolve(token));
+            const dependencies = tokens.map(token => injector.resolve(token));
 
-            return new classProvider(...values);
+            return new classProvider(...dependencies);
         }
 
         return (provider as ValueProvider<any>).useValue;
