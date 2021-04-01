@@ -2,14 +2,14 @@ import {Type} from '../type';
 import {reflection} from '../reflection';
 
 export function inject(token: any) {
-    return (target: Type<any>, _propertyKey: any, parameterIndex: number): void => {
-        const injections = reflection.resolveInjections(target);
+    return (target: Type<any>, _propertyKey: any, index: number): void => {
+        const injections = reflection.resolveParameterInjections(target);
 
         const injection = {
             token,
-            parameterIndex
+            index
         }
 
-        reflection.defineInjections([injection].concat(injections), target);
+        reflection.defineParameterInjections([injection].concat(injections), target);
     }
 }
